@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="home.xhtml">
+    <ui:define name="content">
+        <h:form id="employee-by-department-form">
+            <p:panel header="Department id">
+                <h:panelGrid columns="1">
+                    <p:outputLabel value="Departments: Insurance(Id:1), Sales(Id:2)" />
+                    <p:outputLabel for="id" value="Enter the id for Department: " />
+                    <p:inputNumber id="id" value="#{employeeBean.depId}" />
+                    <h:commandButton value="Send" action="#{employeeBean.loadDepById()}"/>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+        <h:form id="result-form">
+            <p:panel header="Department Employees">
+                <h:panelGrid columns="1">
+                    <p:dataTable id="employees" var="emp" value="#{employeeBean.depEmployees}" lazy="true">
+                        <f:facet name="header">
+                            Employees
+                        </f:facet>
+                        <p:column headerText="Id">
+                            <h:outputText value="#{emp.id}" />
+                        </p:column>
+                        <p:column headerText="Name">
+                            <h:outputText value="#{emp.name}" />
+                        </p:column>
+                        <p:column headerText="Position">
+                            <h:outputText value="#{emp.position}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

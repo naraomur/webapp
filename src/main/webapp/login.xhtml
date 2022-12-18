@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:loadBundle basename="text" var="text"/>
+<h:head>
+    <title><h:outputText value="#{text.title}"/></title>
+</h:head>
+<h:body>
+    <h:form id="login-form">
+        <p:messages id="messages" showDetail="false" />
+
+        <p:panel id="panel" header="Login">
+            <h:panelGrid columns="3" cellpadding="5">
+                <p:outputLabel for="user-name" value="#{text.name}" />
+                <p:inputText id="user-name" value="#{userBean.userId}"
+                             required="true" label="User name">
+                    <f:validateLength minimum="3" />
+                </p:inputText>
+                <p:message for="user-name" display="icon" />
+
+                <p:outputLabel for="password" value="#{text.pass}" />
+                <p:password id="password" value="#{userBean.userPassword}"
+                            required="true" label="Password">
+                    <f:validateLength minimum="3" />
+                </p:password>
+                <p:message for="password" display="icon" />
+            </h:panelGrid>
+
+            <p:commandButton id="login" value="Login"
+                             update="panel messages" action="#{userBean.login()}" />
+            <f:facet name="footer"><h:link value="#{text.register}" outcome="register" /></f:facet>
+        </p:panel>
+    </h:form>
+</h:body>
+</html>
