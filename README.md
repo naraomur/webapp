@@ -1,4 +1,3 @@
-# webapp
 # CRUD Webapp with Login/Logout filter
 
 Welcome to the Spring Boot JSF Crud project repository! This project is a web application built using Spring Boot, JavaServer Faces (JSF), and Maven.
