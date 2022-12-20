@@ -3,6 +3,9 @@
 Welcome to the Spring Boot JSF Crud project repository! This project is a web application built using Spring Boot, JavaServer Faces (JSF), and Maven.
 It also built via the IntelliJ IDEA. The application includes a login filter that checks for a valid session before allowing access to certain pages.
 
+:warning: ### Attention 
+- This project still has bugs and on the process of development to ideally deliver the idea. Thank you for understanding! 
+
 ## Getting Started
 
 To get started with this project, you will need to have the following tools installed on your machine:
