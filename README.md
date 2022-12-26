@@ -4,7 +4,7 @@ Welcome to the Spring Boot JSF Crud project repository! This project is a web ap
 It also built via the IntelliJ IDEA. The application includes a login filter that checks for a valid session before allowing access to certain pages.
 
 :warning: **Attention** 
-- This project still has bugs and on the process of development to ideally deliver the idea. Thank you for understanding! 
+- The login-logout filter is working!!! The sorting by the roles on the process. Thank you for understanding! 
 
 ## Getting Started
 
