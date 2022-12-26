@@ -47,9 +47,9 @@ public class UserBean implements Serializable {
             HttpSession session = (HttpSession) Helper.getFacesContext()
                     .getExternalContext()
                     .getSession(true);
-            session.setAttribute("user", user);
+            session.setAttribute("login", user);
             LOGGER.info("login successful for '{}'", userId);
-            return "login";
+            return HOME_PAGE_REDIRECT;
         } else {
             String msg = Helper.getResourceBundle("text").getString("msgNotFound");
             Helper.getFacesContext().addMessage(null, new FacesMessage(msg));
