@@ -3,6 +3,7 @@ package spring.jsf.web.bean;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import spring.jsf.web.model.ERole;
 import spring.jsf.web.model.User;
 import spring.jsf.web.service.UserService;
 import spring.jsf.web.util.Helper;
@@ -27,6 +28,8 @@ public class UserBean implements Serializable {
             LoggerFactory.getLogger(UserBean.class);
     public static final String HOME_PAGE_REDIRECT =
             "/secured/home.xhtml?faces-redirect=true";
+    public static final String ADMIN_PAGE_REDIRECT =
+            "/admin/admin.xhtml?faces-redirect=true";
     public static final String LOGOUT_PAGE_REDIRECT =
             "/logout.xhtml?faces-redirect=true";
     private User user = new User();
@@ -49,6 +52,10 @@ public class UserBean implements Serializable {
                     .getSession(true);
             session.setAttribute("login", user);
             LOGGER.info("login successful for '{}'", userId);
+            // check the role
+            if(userService.isAdmin(user)){
+                return ADMIN_PAGE_REDIRECT;
+            }
             return HOME_PAGE_REDIRECT;
         } else {
             String msg = Helper.getResourceBundle("text").getString("msgNotFound");
@@ -63,10 +70,12 @@ public class UserBean implements Serializable {
             String summary = Helper.getResourceBundle("text").getString("msgAlreadyRegister");
             Helper.getFacesContext().addMessage(null, new FacesMessage(summary));
             return "register";
+        } else {
+            //should initiate new user for new space for new data otherwise
+            //user is always null and throws null pointer exception
+            user = new User();
+            user = userService.register(userId, userPassword);
         }
-        String encryptPassword = Helper.md5(userPassword);
-        user.setPass(encryptPassword);
-        userService.save(user);
         return "login";
     }
 
@@ -86,9 +95,9 @@ public class UserBean implements Serializable {
         return users;
     }
 
-    public boolean isLoggedIn() {
-        return user != null;
-    }
+//    public boolean isLoggedIn() {
+//        return user != null;
+//    }
 
     public String getUserId() {
         return userId;

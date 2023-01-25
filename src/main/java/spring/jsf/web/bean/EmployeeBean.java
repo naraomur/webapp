@@ -3,7 +3,6 @@ package spring.jsf.web.bean;
 import spring.jsf.web.controller.okHttp;
 import spring.jsf.web.dto.Department;
 import spring.jsf.web.model.Employee;
-import spring.jsf.web.repository.EmployeeRepository;
 import spring.jsf.web.service.EmployeeService;
 
 import javax.annotation.PostConstruct;

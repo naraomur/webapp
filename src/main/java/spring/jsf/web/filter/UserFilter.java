@@ -3,6 +3,7 @@ package spring.jsf.web.filter;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import spring.jsf.web.model.ERole;
 import spring.jsf.web.model.User;
 
 import javax.servlet.*;
@@ -16,6 +17,7 @@ public class UserFilter implements Filter {
             LoggerFactory.getLogger(UserFilter.class);
 
     public static final String LOGIN_PAGE = "/login.xhtml";
+    public static final String NO_ACCESS_PAGE = "/noaccess.xhtml";
 
 
     @Override
@@ -34,6 +36,8 @@ public class UserFilter implements Filter {
         if(uri.contains("/secured") && user == null){
             //if user is not logged in then redirect to login page
             httpServletResponse.sendRedirect(httpServletRequest.getServletContext().getContextPath()+LOGIN_PAGE);
+        } else if (uri.contains("/admin") && !user.getRoles().contains(ERole.ROLE_ADMIN)) {
+            httpServletResponse.sendRedirect(httpServletRequest.getServletContext().getContextPath() + NO_ACCESS_PAGE);
         } else {
             //if user is logged in
             filterChain.doFilter(servletRequest, servletResponse);

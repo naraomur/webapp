@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:loadBundle basename="text" var="text"/>
+<f:view>
+    <h:head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Spring Web App</title>
+    </h:head>
+    <h:body>
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:button href="#{request.contextPath}/secured/employees.xhtml" value="All Employees" />
+                        <p:button href="#{request.contextPath}/secured/department-employees.xhtml" value="Department Employees" />
+                        <p:commandButton value="#{text.logout}" action="#{userBean.logout()}" />
+                    </f:facet>
+                </p:toolbar>
+            </div>
+            <div class="ui-g-12">
+                <ui:insert name="content" />
+            </div>
+        </div>
+    </h:body>
+</f:view>
+</html>
