@@ -17,14 +17,14 @@
             <div class="ui-g-12">
                 <p:toolbar>
                     <f:facet name="left">
-                        <p:button href="#{request.contextPath}/secured/employees.xhtml" value="All Employees" />
-                        <p:button href="#{request.contextPath}/secured/department-employees.xhtml" value="Department Employees" />
                         <p:commandButton value="#{text.logout}" action="#{userBean.logout()}" />
                     </f:facet>
                 </p:toolbar>
             </div>
             <div class="ui-g-12">
                 <ui:insert name="content" />
+                Admin Page for users editing
+                <p:dataTable ></p:dataTable>>
             </div>
         </div>
     </h:body>

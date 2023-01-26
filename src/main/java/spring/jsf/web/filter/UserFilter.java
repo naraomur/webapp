@@ -33,7 +33,7 @@ public class UserFilter implements Filter {
         // managed bean name is exactly the session attribute name
         User user = (User) httpServletRequest
                 .getSession().getAttribute("login");
-        if(uri.contains("/secured") && user == null){
+        if((uri.contains("/secured") || uri.contains("/admin")) && user == null){
             //if user is not logged in then redirect to login page
             httpServletResponse.sendRedirect(httpServletRequest.getServletContext().getContextPath()+LOGIN_PAGE);
         } else if (uri.contains("/admin") && !user.getRoles().contains(ERole.ROLE_ADMIN)) {

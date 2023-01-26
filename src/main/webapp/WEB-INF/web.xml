@@ -30,6 +30,10 @@
     </filter>
     <filter-mapping>
         <filter-name>UserFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>UserFilter</filter-name>
         <url-pattern>/secured/*</url-pattern>
     </filter-mapping>
     <listener>

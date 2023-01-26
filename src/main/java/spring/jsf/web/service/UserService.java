@@ -4,20 +4,16 @@ import org.springframework.stereotype.Service;
 import spring.jsf.web.model.ERole;
 import spring.jsf.web.model.Role;
 import spring.jsf.web.model.User;
-import spring.jsf.web.repository.RoleRepository;
 import spring.jsf.web.repository.UserRepository;
 import spring.jsf.web.util.Helper;
 
-import javax.faces.application.FacesMessage;
 import java.util.*;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -34,8 +30,7 @@ public class UserService {
     }
 
     public User login(String name, String pass) {
-        User user = userRepository.findByNameAndPass(name, pass);
-        return user;
+        return userRepository.findByNameAndPass(name, pass);
     }
 
     public User register(String name, String pass) {
@@ -47,17 +42,14 @@ public class UserService {
             user = new User();
             user.setName(name);
             user.setPass(encryptPassword);
-            Set<Role> roles = new HashSet<>();
+            List<Role> roles = new ArrayList<>();
             if(user.getRoles() == null){
                 if (name.equals("admin")) {
-                    Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN);
-                    roles.add(adminRole);
+                    roles.add(new Role(ERole.ROLE_ADMIN));
                 } else if (name.equals("moderator")) {
-                    Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR);
-                    roles.add(modRole);
+                    roles.add(new Role(ERole.ROLE_MODERATOR));
                 } else {
-                     Role userRole = roleRepository.findByName(ERole.ROLE_USER);
-                    roles.add(userRole);
+                    roles.add(new Role(ERole.ROLE_USER));
                 }
             }
             user.setRoles(roles);
@@ -72,8 +64,8 @@ public class UserService {
 
     public boolean isAdmin(User user) {
         // Use a JPA repository to retrieve the user's roles from the database
-        List<Role> roles = userRepository.findRolesByName(user.getName());
-
+        List<Role> roles = userRepository.findUserRoleById(user.getId());
+        int size = roles.size();
         // Check if the user has the "admin" role
         return roles.contains(ERole.ROLE_ADMIN);
     }

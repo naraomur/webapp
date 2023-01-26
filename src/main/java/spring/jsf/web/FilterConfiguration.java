@@ -13,7 +13,7 @@ public class FilterConfiguration {
                 new FilterRegistrationBean();
         registration.setFilter(new UserFilter());
         registration.addServletNames("Faces Servlet");
-        registration.addUrlPatterns("/secured/*");
+        registration.addUrlPatterns("/admin/*", "/secured/*");
         return registration;
     }
 }

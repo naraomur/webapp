@@ -2,6 +2,7 @@ package spring.jsf.web.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import spring.jsf.web.model.Role;
 import spring.jsf.web.model.User;
@@ -20,6 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u join u.roles r WHERE NOT EXISTS" + "(SELECT r FROM u.roles WHERE r.role = 'ROLE_ADMIN')")
     List<User> getUsers();
 
-    @Query("select u from User u where u.roles = ?1")
-    List<Role> findRolesByName(String username);
+    @Query("select u from User u join fetch u.roles where u.id = :id")
+    List<Role> findUserRoleById(Long id);
 }

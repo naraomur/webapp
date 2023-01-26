@@ -23,8 +23,7 @@ Once you have these tools installed, you can clone the repository and build the 
 git clone https://github.com/naraomur/webapp.git
 ```
 3. Open IntelliJ IDEA and select "Import Project".
-4. Navigate to the webapp directory and select the pom.xml file. Click "Open".
-5. Follow the prompts to import the project into IntelliJ IDEA.
+4. The runner of the project is the main class "WebappApplication.java".
 
 ## Deployment
 
