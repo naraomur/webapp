@@ -1,10 +1,10 @@
 # CRUD Webapp with Login/Logout filter
 
-Welcome to the Spring Boot JSF Crud project repository! This project is a web application built using Spring Boot, JavaServer Faces (JSF), and Maven.
+Welcome to the repository of Spring Boot JSF Crud project with RBAC(Role Based Access Control) **without** Spring Security! This project is a web application built using Spring Boot, JavaServer Faces (JSF), and Maven.
 It also built via the IntelliJ IDEA. The application includes a login filter that checks for a valid session before allowing access to certain pages.
 
 :warning: **Attention** 
-- The login-logout filter is working!!! The sorting by the roles on the process. Thank you for understanding! 
+- The login-logout filter is working!!! RBAC is on the process. Thank you for understanding! 
 
 ## Getting Started
 

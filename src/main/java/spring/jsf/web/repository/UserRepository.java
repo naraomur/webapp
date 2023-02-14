@@ -21,6 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u join u.roles r WHERE NOT EXISTS" + "(SELECT r FROM u.roles WHERE r.role = 'ROLE_ADMIN')")
     List<User> getUsers();
 
-    @Query("select u from User u join fetch u.roles where u.id = :id")
+    @Query("select u from User u join fetch u.roles r where r.id = :id")
     List<Role> findUserRoleById(Long id);
 }

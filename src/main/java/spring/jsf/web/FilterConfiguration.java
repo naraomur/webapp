@@ -8,12 +8,12 @@ import spring.jsf.web.filter.UserFilter;
 @Configuration
 public class FilterConfiguration {
     @Bean
-    public FilterRegistrationBean loginFilter() {
+    public FilterRegistrationBean userFilter() {
         FilterRegistrationBean registration =
                 new FilterRegistrationBean();
         registration.setFilter(new UserFilter());
         registration.addServletNames("Faces Servlet");
-        registration.addUrlPatterns("/admin/*", "/secured/*");
+        registration.addUrlPatterns("/faces/Html/admin/*", "/facesHtml/secured/*");
         return registration;
     }
 }

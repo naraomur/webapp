@@ -23,9 +23,9 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Enumerated(EnumType.STRING)
-    @Column(length = 20)
+    @Column(columnDefinition = "role_type")
     private ERole role;
-    @ManyToMany(mappedBy="roles")
+    @ManyToMany(mappedBy="roles", fetch = FetchType.EAGER)
     private List<User> users = new ArrayList<>();
     public Role(ERole role) {
         this.role = role;

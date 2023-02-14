@@ -53,10 +53,10 @@ public class UserBean implements Serializable {
             session.setAttribute("login", user);
             LOGGER.info("login successful for '{}'", userId);
             // check the role
-            if(userService.isAdmin(user)){
-                return ADMIN_PAGE_REDIRECT;
+            if(user.getRoles().contains(ERole.ROLE_USER)){
+                return HOME_PAGE_REDIRECT;
             }
-            return HOME_PAGE_REDIRECT;
+            return ADMIN_PAGE_REDIRECT;
         } else {
             String msg = Helper.getResourceBundle("text").getString("msgNotFound");
             Helper.getFacesContext().addMessage(null, new FacesMessage(msg));

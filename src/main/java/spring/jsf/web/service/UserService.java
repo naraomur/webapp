@@ -7,6 +7,8 @@ import spring.jsf.web.model.User;
 import spring.jsf.web.repository.UserRepository;
 import spring.jsf.web.util.Helper;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.util.*;
 
 @Service
@@ -43,15 +45,17 @@ public class UserService {
             user.setName(name);
             user.setPass(encryptPassword);
             List<Role> roles = new ArrayList<>();
-            if(user.getRoles() == null){
+            Role role = new Role();
                 if (name.equals("admin")) {
-                    roles.add(new Role(ERole.ROLE_ADMIN));
+                    role.setRole(ERole.ROLE_ADMIN);
+                    roles.add(role);
                 } else if (name.equals("moderator")) {
-                    roles.add(new Role(ERole.ROLE_MODERATOR));
+                    role.setRole(ERole.ROLE_MODERATOR);
+                    roles.add(role);
                 } else {
-                    roles.add(new Role(ERole.ROLE_USER));
+                    role.setRole(ERole.ROLE_USER);
+                    roles.add(role);
                 }
-            }
             user.setRoles(roles);
             userRepository.saveAndFlush(user);
         }
@@ -60,13 +64,5 @@ public class UserService {
 
     public User checkUser(String name) {
         return userRepository.findByName(name);
-    }
-
-    public boolean isAdmin(User user) {
-        // Use a JPA repository to retrieve the user's roles from the database
-        List<Role> roles = userRepository.findUserRoleById(user.getId());
-        int size = roles.size();
-        // Check if the user has the "admin" role
-        return roles.contains(ERole.ROLE_ADMIN);
     }
 }
