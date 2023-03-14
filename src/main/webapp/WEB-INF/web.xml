@@ -25,11 +25,11 @@
         <param-value>Development</param-value>
     </context-param>
     <filter>
-        <filter-name>userFilter</filter-name>
+        <filter-name>loginFilter</filter-name>
         <filter-class>spring.jsf.web.filter.UserFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>userFilter</filter-name>
+        <filter-name>loginFilter</filter-name>
         <url-pattern>/faces/Html/admin/*</url-pattern>
         <url-pattern>/faces/Html/secured/*</url-pattern>
     </filter-mapping>

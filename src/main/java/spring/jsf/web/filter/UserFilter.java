@@ -5,11 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import spring.jsf.web.model.ERole;
+import spring.jsf.web.model.Role;
 import spring.jsf.web.model.User;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @NoArgsConstructor
@@ -24,36 +26,45 @@ public class UserFilter implements Filter {
 
     public static final String ADMIN_PAGE = "/admin/admin.xhtml";
 
-
     @Override
     public void doFilter(ServletRequest servletRequest,
                          ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
 
-        HttpServletRequest httpServletRequest =
-                (HttpServletRequest) servletRequest;
-        HttpServletResponse httpServletResponse =
-                (HttpServletResponse) servletResponse;
-        String uri = httpServletRequest.getRequestURI();
-        // managed bean name is exactly the session attribute name
-        User user = (User) httpServletRequest
-                .getSession().getAttribute("login");
-        if((uri.contains("/secured") || uri.contains("/admin")) && user.equals(null)){
-            //if user is not logged in then redirect to login page
-            httpServletResponse.sendRedirect(httpServletRequest.getServletContext().getContextPath()+LOGIN_PAGE);
-        } else if (uri.contains("/admin") && !user.getRoles().contains(ERole.ROLE_ADMIN)) {
-            httpServletResponse.sendRedirect(httpServletRequest.getServletContext().getContextPath() + NO_ACCESS_PAGE);
-        } else if(uri.contains("/login") && !user.equals(null)) {
-            //if user is logged in then redirect to home page
-            if (user.getRoles().contains(ERole.ROLE_ADMIN)){
-                httpServletResponse.sendRedirect(httpServletRequest.getServletContext().getContextPath() + ADMIN_PAGE);
-            } else {
-                httpServletResponse.sendRedirect(httpServletRequest.getServletContext().getContextPath() + HOME_PAGE);
-            }
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        HttpSession session = request.getSession(false);
+        String loginURI = request.getContextPath() + LOGIN_PAGE;
+
+        boolean loggedIn = session != null && session.getAttribute("login") != null;
+        boolean loginRequest = request.getRequestURI().equals(loginURI);
+
+        if (loggedIn || loginRequest) {
+            filterChain.doFilter(request, response);
         } else {
-            //if user is logged in
-            filterChain.doFilter(servletRequest, servletResponse);
+            response.sendRedirect(loginURI);
         }
+
+//        HttpServletRequest httpServletRequest =
+//                (HttpServletRequest) servletRequest;
+//        HttpServletResponse httpServletResponse =
+//                (HttpServletResponse) servletResponse;
+//        String uri = httpServletRequest.getRequestURI();
+//        // managed bean name is exactly the session attribute name
+//        User user = (User) httpServletRequest
+//                .getSession().getAttribute("login");
+//        if (uri.contains("/admin") && !user.getRoles().contains(new Role(ERole.ROLE_ADMIN))) {
+//            httpServletResponse.sendRedirect(httpServletRequest.getServletContext().getContextPath() + NO_ACCESS_PAGE);
+//        } else if (user != null && uri.contains("/login")) {
+//            if (user.getRoles().contains(new Role(ERole.ROLE_ADMIN))) {
+//                httpServletResponse.sendRedirect(httpServletRequest.getServletContext().getContextPath() + ADMIN_PAGE);
+//            }
+//            httpServletResponse.sendRedirect(httpServletRequest.getServletContext().getContextPath() + HOME_PAGE);
+//        } else {
+//            //if admin is logged in then redirect to admin page
+//            //if user is logged in then redirect to home page
+//            filterChain.doFilter(servletRequest, servletResponse);
+//        }
     }
 
     @Override

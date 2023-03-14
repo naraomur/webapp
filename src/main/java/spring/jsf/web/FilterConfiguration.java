@@ -8,7 +8,7 @@ import spring.jsf.web.filter.UserFilter;
 @Configuration
 public class FilterConfiguration {
     @Bean
-    public FilterRegistrationBean userFilter() {
+    public FilterRegistrationBean loginFilter() {
         FilterRegistrationBean registration =
                 new FilterRegistrationBean();
         registration.setFilter(new UserFilter());

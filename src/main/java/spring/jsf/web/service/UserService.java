@@ -1,6 +1,7 @@
 package spring.jsf.web.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import spring.jsf.web.model.ERole;
 import spring.jsf.web.model.Role;
 import spring.jsf.web.model.User;
@@ -31,6 +32,7 @@ public class UserService {
         userRepository.saveAndFlush(currentUser);
     }
 
+    @Transactional
     public User login(String name, String pass) {
         return userRepository.findByNameAndPass(name, pass);
     }

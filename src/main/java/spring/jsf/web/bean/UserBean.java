@@ -3,7 +3,9 @@ package spring.jsf.web.bean;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 import spring.jsf.web.model.ERole;
+import spring.jsf.web.model.Role;
 import spring.jsf.web.model.User;
 import spring.jsf.web.service.UserService;
 import spring.jsf.web.util.Helper;
@@ -53,10 +55,10 @@ public class UserBean implements Serializable {
             session.setAttribute("login", user);
             LOGGER.info("login successful for '{}'", userId);
             // check the role
-            if(user.getRoles().contains(ERole.ROLE_USER)){
-                return HOME_PAGE_REDIRECT;
+            if(user.getRoles().get(0).getRole() == ERole.ROLE_ADMIN){
+                return ADMIN_PAGE_REDIRECT;
             }
-            return ADMIN_PAGE_REDIRECT;
+            return HOME_PAGE_REDIRECT;
         } else {
             String msg = Helper.getResourceBundle("text").getString("msgNotFound");
             Helper.getFacesContext().addMessage(null, new FacesMessage(msg));

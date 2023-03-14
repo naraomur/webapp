@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import spring.jsf.web.model.Department;
 import spring.jsf.web.repository.DepartmentRepository;
 
-import javax.inject.Named;
 import java.util.List;
 import java.util.Optional;
 
